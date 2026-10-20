@@ -1,0 +1,6 @@
+{
+  "name": "National Child Health Tracking App",
+  "description": "Connected Records. Timely Care. Healthier Futures. A comprehensive digital healthcare prototype for child health tracking from birth to 18 years.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
