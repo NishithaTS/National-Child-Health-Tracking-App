@@ -38,6 +38,7 @@ export const LandingPage: React.FC = () => {
       description: 'Keep immunisations, growth, appointments, and trusted care teams connected from a child’s first breath to their eighteenth birthday.',
       icon: Baby,
       tone: 'bg-[#f4c9b8]',
+      image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Health-Featured-Image-1024x683.jpg',
     },
     {
       eyebrow: 'For care teams',
@@ -45,6 +46,7 @@ export const LandingPage: React.FC = () => {
       description: 'Give frontline workers and clinicians a shared longitudinal record that turns fragmented information into timely action.',
       icon: HeartHandshake,
       tone: 'bg-[#dce8c8]',
+      image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Homepage-1-1-scaled-e1774610476245.jpg',
     },
     {
       eyebrow: 'For public health',
@@ -52,6 +54,7 @@ export const LandingPage: React.FC = () => {
       description: 'Surface coverage gaps, referral trends, and emerging risks with privacy-conscious dashboards built for real-world delivery.',
       icon: BarChart3,
       tone: 'bg-[#d7d6ee]',
+      image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Impact-and-Solutions-Featured-Image-scaled-1-1024x683.jpg',
     },
   ];
 
@@ -92,6 +95,9 @@ export const LandingPage: React.FC = () => {
               <h1 className="max-w-4xl text-[clamp(3.5rem,9vw,8.5rem)] font-light leading-[.84] tracking-[-.075em] text-[#183b3b]">Every child.<br /><em className="font-serif not-italic">A healthier future.</em></h1>
             </div>
             <div className="max-w-md pb-1 lg:pb-3">
+              <div className="mb-8 overflow-hidden rounded-[2rem] border border-[#183b3b]/20 bg-[#183b3b]/10">
+                <img src="https://hunter-healthcare.com/wp-content/uploads/2026/06/Homepage-2-scaled-1.jpg" alt="Healthcare professionals collaborating" className="h-48 w-full object-cover mix-blend-multiply sm:h-56" />
+              </div>
               <p className="text-lg leading-relaxed text-[#183b3b]/80 sm:text-xl">The right record, at the right moment, with the right people. A connected platform for childhood health from birth to 18.</p>
               <button onClick={() => navigateTo('/demo-login')} className="mt-8 inline-flex items-center gap-3 border-b-2 border-[#183b3b] pb-2 text-sm font-bold text-[#183b3b] transition hover:gap-5">See what’s possible <ArrowRight className="size-4" /></button>
             </div>
@@ -100,7 +106,7 @@ export const LandingPage: React.FC = () => {
         </section>
 
         <section id="who-we-serve" className="px-5 py-20 sm:px-10 sm:py-28">
-          <div className="mx-auto max-w-[1380px]"><div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#fa765e]">Who we serve</p><h2 className="mt-5 max-w-sm text-4xl font-light leading-tight tracking-[-.04em] sm:text-5xl">Health is a human story.</h2></div><p className="max-w-2xl text-2xl font-light leading-snug text-[#183b3b]/70 sm:text-3xl">Behind every check-up, vaccine, and referral is a child who deserves care that feels joined-up, considered, and ready for what comes next.</p></div><div className="mt-14 grid gap-4 md:grid-cols-3">{services.map((service) => { const Icon = service.icon; return <article key={service.eyebrow} className={`${service.tone} flex min-h-[310px] flex-col justify-between rounded-[2rem] p-7 transition-transform hover:-translate-y-1`}><div className="flex items-start justify-between"><span className="text-xs font-bold uppercase tracking-[.12em] text-[#183b3b]/65">{service.eyebrow}</span><Icon className="size-6" /></div><div><h3 className="max-w-xs text-2xl font-semibold leading-tight tracking-[-.03em]">{service.title}</h3><p className="mt-4 text-sm leading-relaxed text-[#183b3b]/70">{service.description}</p></div></article> })}</div></div>
+          <div className="mx-auto max-w-[1380px]"><div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#fa765e]">Who we serve</p><h2 className="mt-5 max-w-sm text-4xl font-light leading-tight tracking-[-.04em] sm:text-5xl">Health is a human story.</h2></div><p className="max-w-2xl text-2xl font-light leading-snug text-[#183b3b]/70 sm:text-3xl">Behind every check-up, vaccine, and referral is a child who deserves care that feels joined-up, considered, and ready for what comes next.</p></div><div className="mt-14 grid gap-4 md:grid-cols-3">{services.map((service) => { const Icon = service.icon; return <article key={service.eyebrow} className={`${service.tone} flex min-h-[390px] flex-col justify-between overflow-hidden rounded-[2rem] transition-transform hover:-translate-y-1`}><img src={service.image} alt="" className="h-36 w-full object-cover mix-blend-multiply" /><div className="flex flex-1 flex-col justify-between p-7"><div className="flex items-start justify-between"><span className="text-xs font-bold uppercase tracking-[.12em] text-[#183b3b]/65">{service.eyebrow}</span><Icon className="size-6" /></div><div><h3 className="max-w-xs text-2xl font-semibold leading-tight tracking-[-.03em]">{service.title}</h3><p className="mt-4 text-sm leading-relaxed text-[#183b3b]/70">{service.description}</p></div></div></article> })}</div></div>
         </section>
 
         <section id="what-we-do" className="bg-[#183b3b] px-5 py-20 text-[#f5f2ec] sm:px-10 sm:py-28"><div className="mx-auto max-w-[1380px]"><div className="grid gap-10 lg:grid-cols-[1fr_1fr]"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#fa765e]">What we do</p><h2 className="mt-5 max-w-xl text-4xl font-light leading-tight tracking-[-.04em] sm:text-6xl">Make every decision count.</h2></div><p className="max-w-xl text-lg leading-relaxed text-[#f5f2ec]/65">We bring together the people, information, and signals that make better child health outcomes possible—without asking care teams to work harder to find them.</p></div><div className="mt-16 grid gap-0 border-t border-[#f5f2ec]/20 md:grid-cols-3">{[[FileHeart,'Connected records','A longitudinal view that travels with every child.'],[Syringe,'Timely care','Smart reminders and vaccination intelligence for the moments that matter.'],[ShieldCheck,'Responsible insight','Assistive flags that support clinical judgment, never replace it.']].map(([Icon,title,desc]) => { const Component = Icon as React.ElementType; return <div key={title as string} className="border-b border-[#f5f2ec]/20 py-8 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0"><Component className="mb-8 size-6 text-[#fa765e]" /><h3 className="text-2xl font-light">{title as string}</h3><p className="mt-3 max-w-xs text-sm leading-relaxed text-[#f5f2ec]/60">{desc as string}</p></div> })}</div></div></section>
