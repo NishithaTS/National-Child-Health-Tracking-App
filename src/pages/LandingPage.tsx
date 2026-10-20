@@ -96,7 +96,7 @@ export const LandingPage: React.FC = () => {
             </div>
             <div className="max-w-md pb-1 lg:pb-3">
               <div className="mb-8 overflow-hidden rounded-[2rem] border border-[#2f2a63]/20 bg-[#2f2a63]/10">
-                <img src="https://hunter-healthcare.com/wp-content/uploads/2026/06/Homepage-2-scaled-1.jpg" alt="Healthcare professionals collaborating" className="h-48 w-full object-cover mix-blend-multiply sm:h-56" />
+                <img src="https://images.ctfassets.net/6m9bd13t776q/3yMjCQsBOY8A6bx7gkIeVL/67a02672070d9b39634421d7e6bf5957/18_month_old_check_up-hero-shutterstock_1898938672.webp?w=1122" alt="Healthcare professionals collaborating" className="h-48 w-full object-cover mix-blend-multiply sm:h-56" />
               </div>
               <p className="text-lg leading-relaxed text-[#2f2a63]/80 sm:text-xl">The right record, at the right moment, with the right people. A connected platform for childhood health from birth to 18.</p>
               <button onClick={() => navigateTo('/demo-login')} className="mt-8 inline-flex items-center gap-3 border-b-2 border-[#2f2a63] pb-2 text-sm font-bold text-[#2f2a63] transition hover:gap-5">See what’s possible <ArrowRight className="size-4" /></button>
