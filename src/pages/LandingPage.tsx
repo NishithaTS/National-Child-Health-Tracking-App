@@ -1,139 +1,39 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import {
-  ArrowUpRight,
-  ArrowRight,
-  Baby,
-  BarChart3,
-  CalendarDays,
-  ChevronDown,
-  CircleCheck,
-  FileHeart,
-  HeartHandshake,
-  Menu,
-  ShieldCheck,
-  Sparkles,
-  Syringe,
-  Users,
-  X,
-} from 'lucide-react';
+import { ArrowRight, ArrowUpRight, BarChart3, Baby, CircleCheck, FileHeart, HeartHandshake, Menu, ShieldCheck, Sparkles, Syringe, X } from 'lucide-react';
+
+const navItems = [['Who we serve', '#who-we-serve'], ['What we do', '#what-we-do'], ['Our story', '#who-we-are'], ['Demo', '#your-next-role']];
 
 export const LandingPage: React.FC = () => {
   const { navigateTo } = useApp();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [openFaq, setOpenFaq] = React.useState<number | null>(0);
-  const [activeVideo, setActiveVideo] = React.useState(0);
-  const heroVideos = [
-    { src: '/videos/hero-health-1.mp4', label: 'Routine care' },
-    { src: '/videos/hero-health-2.mp4', label: 'Connected teams' },
-    { src: '/videos/hero-health-3.mp4', label: 'Better outcomes' },
-  ];
-
-  const navItems = [
-    ['Who we serve', '#who-we-serve'],
-    ['What we do', '#what-we-do'],
-    ['Who we are', '#who-we-are'],
-    ['Your next role', '#your-next-role'],
-    ['Contact', '#contact'],
-  ];
+  const [openFaq, setOpenFaq] = React.useState(0);
 
   const services = [
-    {
-      eyebrow: 'For families',
-      title: 'A clearer path through every stage of childhood',
-      description: 'Keep immunisations, growth, appointments, and trusted care teams connected from a child’s first breath to their eighteenth birthday.',
-      icon: Baby,
-      tone: 'bg-[#f7ddd2]',
-      image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Health-Featured-Image-1024x683.jpg',
-    },
-    {
-      eyebrow: 'For care teams',
-      title: 'Better decisions, made with the full picture',
-      description: 'Give frontline workers and clinicians a shared longitudinal record that turns fragmented information into timely action.',
-      icon: HeartHandshake,
-      tone: 'bg-[#dcefe8]',
-      image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Homepage-1-1-scaled-e1774610476245.jpg',
-    },
-    {
-      eyebrow: 'For public health',
-      title: 'The insight to improve outcomes at scale',
-      description: 'Surface coverage gaps, referral trends, and emerging risks with privacy-conscious dashboards built for real-world delivery.',
-      icon: BarChart3,
-      tone: 'bg-[#dce8f2]',
-      image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Impact-and-Solutions-Featured-Image-scaled-1-1024x683.jpg',
-    },
+    { eyebrow: 'Families', title: 'A clear view of every stage of childhood', description: 'Keep growth, immunisations, appointments, and trusted care teams connected from birth to 18.', icon: Baby, image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Health-Featured-Image-1024x683.jpg' },
+    { eyebrow: 'Care teams', title: 'The full picture, right when it matters', description: 'Give frontline workers and clinicians a shared record that turns fragmented information into timely action.', icon: HeartHandshake, image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Homepage-1-1-scaled-e1774610476245.jpg' },
+    { eyebrow: 'Public health', title: 'Insight that improves outcomes at scale', description: 'Surface coverage gaps, referral trends, and emerging risks with privacy-conscious dashboards.', icon: BarChart3, image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Impact-and-Solutions-Featured-Image-scaled-1-1024x683.jpg' },
   ];
+  const faqs = [['What is the National Child Health Tracking App?', 'A connected digital health platform concept for families, health workers, clinicians, and public health teams.'], ['Is this a live patient-record system?', 'No. This is a demonstration prototype. All profiles, records, and statistics are fictional.'], ['How does it support health workers?', 'A field-ready console supports home visits, measurements, immunisation logging, referrals, and offline sync.']];
 
-  const faqs = [
-    ['What is the National Child Health Tracking App?', 'A connected digital health platform concept that helps families, health workers, clinicians, and public health teams coordinate care from birth to age 18.'],
-    ['Is this a live patient-record system?', 'No. This interactive experience is a demonstration prototype. All child profiles, records, and statistics are fictional.'],
-    ['How does it support health workers?', 'A field-ready console supports home visits, growth measurements, immunisation logging, referrals, and a simulated offline sync queue.'],
-  ];
+  return <div className="min-h-screen bg-[#f4f5f0] font-sans text-[#17251f]">
+    <section className="relative flex min-h-[min(760px,100vh)] flex-col overflow-hidden bg-[#15271f] text-[#f4f5f0]">
+      <video className="absolute inset-0 h-full w-full object-cover opacity-60" autoPlay muted loop playsInline aria-label="Children and care teams in motion"><source src="/videos/hero-health-1.mp4" type="video/mp4" /></video>
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,17,.62),rgba(10,22,17,.2)_45%,rgba(10,22,17,.84))]" />
+      <header className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-10"><a href="#top" className="rounded-xl bg-[#f4f5f0] px-4 py-3 text-[13px] font-black tracking-[-.04em] text-[#17251f]">NCHT<span className="text-[#6ebd45]">+</span></a><nav className="hidden items-center gap-7 text-xs font-semibold lg:flex">{navItems.map(([label, href]) => <a key={label} href={href} className="transition hover:text-[#9ce477]">{label}</a>)}</nav><div className="flex items-center gap-2"><button className="rounded-xl bg-[#f4f5f0] p-3 text-[#17251f] lg:hidden" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Close menu' : 'Open menu'}>{mobileOpen ? <X /> : <Menu />}</button><button onClick={() => navigateTo('/demo-login')} className="hidden rounded-xl bg-[#f4f5f0] px-5 py-3 text-xs font-bold text-[#17251f] transition hover:bg-[#9ce477] lg:block">Explore demo <ArrowUpRight className="ml-1 inline size-4" /></button></div></header>
+      {mobileOpen && <nav className="relative z-20 mx-5 flex flex-col gap-4 rounded-2xl bg-[#f4f5f0] p-5 text-sm font-semibold text-[#17251f] lg:hidden">{navItems.map(([label, href]) => <a key={label} href={href} onClick={() => setMobileOpen(false)}>{label}</a>)}<button onClick={() => navigateTo('/demo-login')} className="text-left font-bold text-[#43852e]">Open demo <ArrowRight className="inline size-4" /></button></nav>}
+      <div className="relative z-10 mx-auto flex w-full max-w-[1180px] flex-1 flex-col items-center justify-center px-5 pb-20 text-center sm:px-10"><p className="mb-6 text-xs font-bold uppercase tracking-[.2em] text-[#9ce477]">About the platform</p><h1 className="max-w-4xl text-[clamp(3.3rem,8vw,7.8rem)] font-black uppercase leading-[.86] tracking-[-.075em]">Healthier<br /><span className="text-[#9ce477]">futures</span> start here.</h1><p className="mt-7 max-w-md text-base leading-relaxed text-white/75">One continuous view of childhood health, designed for the people who care for every child.</p></div>
+      <a href="#who-we-serve" className="absolute bottom-0 left-0 z-10 hidden rounded-tr-2xl bg-[#43852e] px-4 py-7 text-[10px] font-bold uppercase tracking-[.16em] [writing-mode:vertical-rl] lg:block">Scroll to explore</a><div className="absolute right-0 top-1/2 z-10 hidden rounded-l-2xl bg-[#43852e] px-4 py-6 text-[10px] font-bold uppercase tracking-[.16em] [writing-mode:vertical-rl] lg:block">Built for better care</div>
+    </section>
 
-  return (
-    <div className="min-h-screen bg-[#f6faf8] text-[#123b36] font-sans">
-      <div className="bg-[#123b36] px-5 py-2.5 text-center text-[11px] font-semibold tracking-wide text-[#f6faf8]">
-        A connected approach to healthier childhoods <span className="mx-2 text-[#8cc63e]">•</span> <button onClick={() => navigateTo('/demo-login')} className="underline underline-offset-4 hover:text-[#8cc63e]">Explore the interactive demo</button>
-      </div>
-
-      <header className="border-b border-[#123b36]/15 bg-[#f6faf8]/95 px-5 py-5 backdrop-blur-md sm:px-10">
-        <div className="mx-auto flex max-w-[1380px] items-center justify-between">
-          <a href="#top" className="flex items-center gap-3" aria-label="National Child Health Tracking home">
-            <span className="flex size-10 items-center justify-center rounded-full bg-[#123b36] text-[#f6faf8]"><HeartHandshake className="size-5" /></span>
-            <span className="max-w-[155px] text-[13px] font-extrabold uppercase leading-[1.05] tracking-[.08em]">National Child Health Tracking</span>
-          </a>
-          <nav className="hidden items-center gap-7 text-[12px] font-semibold lg:flex" aria-label="Main navigation">
-            {navItems.map(([label, href]) => <a key={label} href={href} className="transition-colors hover:text-[#8cc63e]">{label}</a>)}
-          </nav>
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="rounded-full border border-[#123b36]/20 p-2 lg:hidden" aria-label={mobileOpen ? 'Close menu' : 'Open menu'}>
-            {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-          <button onClick={() => navigateTo('/demo-login')} className="hidden items-center gap-2 rounded-full bg-[#8cc63e] px-5 py-3 text-xs font-bold text-[#123b36] transition hover:bg-[#2a9d8f] lg:flex">Launch demo <ArrowUpRight className="size-4" /></button>
-        </div>
-        {mobileOpen && <nav className="flex flex-col gap-4 pt-5 text-sm font-semibold lg:hidden">{navItems.map(([label, href]) => <a key={label} href={href} onClick={() => setMobileOpen(false)}>{label}</a>)}<button onClick={() => navigateTo('/demo-login')} className="w-fit rounded-full bg-[#8cc63e] px-4 py-2">Launch demo</button></nav>}
-      </header>
-
-      <main id="top">
-        <section className="relative overflow-hidden bg-[#8cc63e] px-5 pb-16 pt-12 sm:px-10 sm:pb-24 sm:pt-20">
-          <div className="mx-auto grid max-w-[1380px] items-end gap-12 lg:grid-cols-[1.2fr_.8fr]">
-            <div>
-              <p className="mb-7 text-xs font-bold uppercase tracking-[.16em] text-[#123b36]/70">Digital healthcare, reimagined</p>
-              <h1 className="max-w-4xl text-[clamp(3.5rem,9vw,8.5rem)] font-light leading-[.84] tracking-[-.075em] text-[#123b36]">Every child.<br /><em className="font-serif not-italic">A healthier future.</em></h1>
-            </div>
-            <div className="max-w-md pb-1 lg:pb-3">
-              <div className="group relative mb-8 overflow-hidden rounded-[2rem] border border-[#123b36]/20 bg-[#123b36] shadow-[0_18px_50px_rgba(18,59,54,.18)]">
-                <div className="relative aspect-[1.62] overflow-hidden">
-                  <video className="absolute inset-0 h-full w-full object-cover" autoPlay muted playsInline onEnded={() => setActiveVideo((current) => (current + 1) % heroVideos.length)} aria-label="Scenes from connected child healthcare">
-                    <source src={heroVideos[activeVideo].src} type="video/mp4" />
-                  </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#123b36]/70 via-[#123b36]/10 to-transparent" />
-                  <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-[#f6faf8]/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-[#123b36] backdrop-blur-sm"><span className="size-1.5 animate-pulse rounded-full bg-[#8cc63e]" /> In motion</div>
-                </div>
-                <div className="flex items-center gap-2 bg-[#123b36] px-5 py-3"><span className="text-[10px] font-bold uppercase tracking-[.14em] text-[#f6faf8]/65">Continuous care</span><span className="ml-auto flex gap-1.5" aria-hidden="true">{heroVideos.map((video) => <span key={video.src} className="size-1.5 rounded-full bg-[#8cc63e]/80" />)}</span></div>
-              </div>
-              <p className="text-lg leading-relaxed text-[#123b36]/80 sm:text-xl">The right record, at the right moment, with the right people. A connected platform for childhood health from birth to 18.</p>
-              <button onClick={() => navigateTo('/demo-login')} className="mt-8 inline-flex items-center gap-3 border-b-2 border-[#123b36] pb-2 text-sm font-bold text-[#123b36] transition hover:gap-5">See what’s possible <ArrowRight className="size-4" /></button>
-            </div>
-          </div>
-          <div className="mx-auto mt-16 max-w-[1380px] border-t border-[#123b36]/25 pt-5"><div className="flex flex-wrap gap-x-10 gap-y-3 text-xs font-bold uppercase tracking-[.12em] text-[#123b36]/65"><span>Birth — 18 years</span><span>6 care perspectives</span><span>One continuous record</span></div></div>
-        </section>
-
-        <section id="who-we-serve" className="px-5 py-20 sm:px-10 sm:py-28">
-          <div className="mx-auto max-w-[1380px]"><div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#8cc63e]">Who we serve</p><h2 className="mt-5 max-w-sm text-4xl font-light leading-tight tracking-[-.04em] sm:text-5xl">Health is a human story.</h2></div><p className="max-w-2xl text-2xl font-light leading-snug text-[#123b36]/70 sm:text-3xl">Behind every check-up, vaccine, and referral is a child who deserves care that feels joined-up, considered, and ready for what comes next.</p></div><div className="mt-14 grid gap-4 md:grid-cols-3">{services.map((service) => { const Icon = service.icon; return <article key={service.eyebrow} className={`${service.tone} flex min-h-[390px] flex-col justify-between overflow-hidden rounded-[2rem] transition-transform hover:-translate-y-1`}><img src={service.image} alt="" className="h-36 w-full object-cover mix-blend-multiply" /><div className="flex flex-1 flex-col justify-between p-7"><div className="flex items-start justify-between"><span className="text-xs font-bold uppercase tracking-[.12em] text-[#123b36]/65">{service.eyebrow}</span><Icon className="size-6" /></div><div><h3 className="max-w-xs text-2xl font-semibold leading-tight tracking-[-.03em]">{service.title}</h3><p className="mt-4 text-sm leading-relaxed text-[#123b36]/70">{service.description}</p></div></div></article> })}</div></div>
-        </section>
-
-        <section id="what-we-do" className="bg-[#123b36] px-5 py-20 text-[#f6faf8] sm:px-10 sm:py-28"><div className="mx-auto max-w-[1380px]"><div className="grid gap-10 lg:grid-cols-[1fr_1fr]"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#8cc63e]">What we do</p><h2 className="mt-5 max-w-xl text-4xl font-light leading-tight tracking-[-.04em] sm:text-6xl">Make every decision count.</h2></div><p className="max-w-xl text-lg leading-relaxed text-[#f6faf8]/65">We bring together the people, information, and signals that make better child health outcomes possible—without asking care teams to work harder to find them.</p></div><div className="mt-16 grid gap-0 border-t border-[#f6faf8]/20 md:grid-cols-3">{[[FileHeart,'Connected records','A longitudinal view that travels with every child.'],[Syringe,'Timely care','Smart reminders and vaccination intelligence for the moments that matter.'],[ShieldCheck,'Responsible insight','Assistive flags that support clinical judgment, never replace it.']].map(([Icon,title,desc]) => { const Component = Icon as React.ElementType; return <div key={title as string} className="border-b border-[#f6faf8]/20 py-8 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0"><Component className="mb-8 size-6 text-[#8cc63e]" /><h3 className="text-2xl font-light">{title as string}</h3><p className="mt-3 max-w-xs text-sm leading-relaxed text-[#f6faf8]/60">{desc as string}</p></div> })}</div></div></section>
-
-        <section id="who-we-are" className="px-5 py-20 sm:px-10 sm:py-28"><div className="mx-auto max-w-[1380px]"><div className="flex flex-col justify-between gap-8 border-b border-[#123b36]/20 pb-10 md:flex-row md:items-end"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#8cc63e]">Who we are</p><h2 className="mt-4 max-w-2xl text-4xl font-light leading-tight tracking-[-.04em] sm:text-6xl">Bigger thinking.<br /><em className="font-serif not-italic">Healthier futures.</em></h2></div><p className="max-w-sm text-sm leading-relaxed text-[#123b36]/65">A proposal for a national child health network built around continuity, collaboration, and practical innovation.</p></div><div className="grid gap-10 pt-12 md:grid-cols-2"><div className="rounded-[2rem] bg-[#dcefe8] p-8 sm:p-12"><Sparkles className="size-7" /><h3 className="mt-20 max-w-md text-3xl font-light leading-tight">A platform designed around the realities of care delivery.</h3></div><div className="flex flex-col justify-center gap-7">{['One shared view across the care journey','Clearer pathways for every referral','Privacy-conscious insight for public health'].map((item, index) => <div key={item} className="flex items-center gap-4 border-b border-[#123b36]/15 pb-5 text-xl font-light"><span className="text-sm font-bold text-[#8cc63e]">0{index + 1}</span>{item}<CircleCheck className="ml-auto size-5 text-[#8cc63e]" /></div>)}</div></div></div></section>
-
-        <section id="your-next-role" className="bg-[#e8f1f6] px-5 py-20 sm:px-10 sm:py-24"><div className="mx-auto max-w-[1380px] text-center"><p className="text-xs font-bold uppercase tracking-[.16em] text-[#8cc63e]">Your next role</p><h2 className="mx-auto mt-4 max-w-3xl text-4xl font-light leading-tight tracking-[-.04em] sm:text-6xl">See the experience through the eyes of your care role.</h2><p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-[#123b36]/65">Explore a working prototype for families, frontline health workers, doctors, specialists, and public health leaders.</p><button onClick={() => navigateTo('/demo-login')} className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#123b36] px-7 py-4 text-sm font-bold text-[#f6faf8] transition hover:bg-[#8cc63e] hover:text-[#123b36]">Choose your demo role <ArrowUpRight className="size-4" /></button></div></section>
-
-        <section id="contact" className="px-5 py-20 sm:px-10 sm:py-24"><div className="mx-auto grid max-w-[1380px] gap-12 lg:grid-cols-[1fr_.7fr]"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#8cc63e]">Questions, ideas, next steps</p><h2 className="mt-4 max-w-2xl text-4xl font-light leading-tight tracking-[-.04em] sm:text-6xl">Let’s make care feel connected.</h2></div><div className="flex flex-col justify-end"><a href="mailto:hello@childhealth.network" className="flex items-center justify-between border-b border-[#123b36]/25 py-5 text-lg font-semibold hover:text-[#8cc63e]">Start a conversation <ArrowUpRight className="size-5" /></a><button onClick={() => navigateTo('/demo-login')} className="flex items-center justify-between border-b border-[#123b36]/25 py-5 text-left text-lg font-semibold hover:text-[#8cc63e]">Explore the prototype <ArrowUpRight className="size-5" /></button></div></div></section>
-
-        <section id="faq" className="bg-[#eff6d9] px-5 py-20 sm:px-10 sm:py-24"><div className="mx-auto max-w-[900px]"><p className="text-xs font-bold uppercase tracking-[.16em] text-[#123b36]/65">Frequently asked</p><h2 className="mt-4 text-4xl font-light tracking-[-.04em] sm:text-5xl">A few useful answers.</h2><div className="mt-10">{faqs.map(([question, answer], index) => <div key={question} className="border-t border-[#123b36]/25 py-5"><button onClick={() => setOpenFaq(openFaq === index ? null : index)} className="flex w-full items-center justify-between text-left text-lg font-semibold"><span>{question}</span><ChevronDown className={`size-5 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} /></button>{openFaq === index && <p className="max-w-2xl pt-4 text-sm leading-relaxed text-[#123b36]/70">{answer}</p>}</div>)}</div></div></section>
-      </main>
-
-      <footer className="bg-[#123b36] px-5 py-8 text-[#f6faf8] sm:px-10"><div className="mx-auto flex max-w-[1380px] flex-col justify-between gap-5 text-xs text-[#f6faf8]/60 sm:flex-row"><span>© 2026 National Child Health Tracking</span><span>Connected records. Timely care. Healthier futures.</span></div></footer>
-    </div>
-  );
+    <main id="top">
+      <section className="border-b border-[#17251f]/15 bg-[#f4f5f0] px-5 py-12 sm:px-10"><div className="mx-auto grid max-w-[1180px] grid-cols-2 gap-8 sm:grid-cols-4"><div><strong className="block text-4xl font-black tracking-[-.06em] sm:text-5xl">0–18</strong><span className="text-xs uppercase tracking-[.12em] text-[#17251f]/60">Years of care</span></div><div><strong className="block text-4xl font-black tracking-[-.06em] sm:text-5xl">6</strong><span className="text-xs uppercase tracking-[.12em] text-[#17251f]/60">Care perspectives</span></div><div><strong className="block text-4xl font-black tracking-[-.06em] sm:text-5xl">1</strong><span className="text-xs uppercase tracking-[.12em] text-[#17251f]/60">Shared record</span></div><div><strong className="block text-4xl font-black tracking-[-.06em] sm:text-5xl">24/7</strong><span className="text-xs uppercase tracking-[.12em] text-[#17251f]/60">Ready when needed</span></div></div></section>
+      <section id="who-we-serve" className="px-5 py-20 sm:px-10 sm:py-28"><div className="mx-auto max-w-[1180px]"><div className="mb-12 grid gap-6 md:grid-cols-[.7fr_1.3fr] md:items-end"><p className="text-xs font-bold uppercase tracking-[.18em] text-[#43852e]">Who we are</p><h2 className="max-w-3xl text-4xl font-black uppercase leading-[.9] tracking-[-.06em] sm:text-6xl">A platform built around the <span className="text-[#43852e]">whole story.</span></h2></div><div className="grid gap-4 md:grid-cols-3">{services.map(({ eyebrow, title, description, icon: Icon, image }) => <article key={eyebrow} className="group overflow-hidden rounded-2xl bg-[#e2e8de]"><div className="h-48 overflow-hidden bg-[#c7d8c1]"><img src={image} alt="" className="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-105 group-hover:grayscale-0" /></div><div className="flex min-h-[250px] flex-col justify-between p-6"><div className="flex justify-between"><span className="text-xs font-bold uppercase tracking-[.14em] text-[#43852e]">{eyebrow}</span><Icon className="size-5" /></div><div><h3 className="text-2xl font-bold leading-tight tracking-[-.04em]">{title}</h3><p className="mt-3 text-sm leading-relaxed text-[#17251f]/65">{description}</p></div></div></article>)}</div></div></section>
+      <section id="what-we-do" className="bg-[#dce9d7] px-5 py-20 sm:px-10 sm:py-28"><div className="mx-auto max-w-[1180px]"><div className="flex flex-col justify-between gap-8 border-b border-[#17251f]/20 pb-10 md:flex-row md:items-end"><div><p className="text-xs font-bold uppercase tracking-[.18em] text-[#43852e]">What we do</p><h2 className="mt-4 max-w-2xl text-4xl font-black uppercase leading-[.9] tracking-[-.06em] sm:text-6xl">Make every decision <span className="text-[#43852e]">count.</span></h2></div><p className="max-w-sm text-sm leading-relaxed text-[#17251f]/65">Bring together the people, information, and signals that make better child health outcomes possible.</p></div><div className="grid gap-0 md:grid-cols-3">{[[FileHeart, 'Connected records', 'A longitudinal view that travels with every child.'], [Syringe, 'Timely care', 'Smart reminders for the moments that matter.'], [ShieldCheck, 'Responsible insight', 'Assistive flags that support clinical judgment.']].map(([Icon, title, desc]) => { const C = Icon as React.ElementType; return <div key={title as string} className="border-b border-[#17251f]/20 py-8 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0"><C className="mb-12 size-6 text-[#43852e]" /><h3 className="text-2xl font-bold tracking-[-.04em]">{title as string}</h3><p className="mt-3 max-w-xs text-sm leading-relaxed text-[#17251f]/65">{desc as string}</p></div> })}</div></div></section>
+      <section id="who-we-are" className="bg-[#17251f] px-5 py-20 text-[#f4f5f0] sm:px-10 sm:py-28"><div className="mx-auto max-w-[1180px]"><p className="text-xs font-bold uppercase tracking-[.18em] text-[#9ce477]">Our story</p><h2 className="mt-5 max-w-4xl text-4xl font-black uppercase leading-[.88] tracking-[-.06em] sm:text-7xl">From fragmented moments<br />to <span className="text-[#9ce477]">continuous care.</span></h2><div className="mt-16 grid gap-8 border-t border-white/20 pt-8 sm:grid-cols-4">{[['01','Birth','A child enters the system.'],['02','Growing','Records become a story.'],['03','Connected','Teams see what matters.'],['04','Thriving','Care gets ahead of risk.']].map(([num,title,desc]) => <div key={num}><span className="text-sm font-bold text-[#9ce477]">{num}</span><h3 className="mt-8 text-xl font-bold">{title}</h3><p className="mt-2 text-sm leading-relaxed text-white/55">{desc}</p></div>)}</div></div></section>
+      <section id="your-next-role" className="px-5 py-20 sm:px-10 sm:py-28"><div className="mx-auto flex max-w-[1180px] flex-col items-start justify-between gap-8 md:flex-row md:items-end"><div><p className="text-xs font-bold uppercase tracking-[.18em] text-[#43852e]">Explore the experience</p><h2 className="mt-4 max-w-3xl text-4xl font-black uppercase leading-[.9] tracking-[-.06em] sm:text-6xl">See care through <span className="text-[#43852e]">your role.</span></h2></div><button onClick={() => navigateTo('/demo-login')} className="rounded-xl bg-[#17251f] px-6 py-4 text-sm font-bold text-[#f4f5f0] transition hover:bg-[#43852e]">Choose your demo role <ArrowUpRight className="ml-2 inline size-4" /></button></div></section>
+      <section id="faq" className="bg-[#43852e] px-5 py-20 text-[#f4f5f0] sm:px-10 sm:py-24"><div className="mx-auto max-w-[900px]"><p className="text-xs font-bold uppercase tracking-[.18em] text-[#b9f398]">Useful answers</p><h2 className="mt-4 text-4xl font-black uppercase leading-[.9] tracking-[-.06em] sm:text-6xl">Questions, answered.</h2><div className="mt-10">{faqs.map(([question, answer], index) => <div key={question} className="border-t border-white/25 py-5"><button onClick={() => setOpenFaq(openFaq === index ? -1 : index)} className="flex w-full items-center justify-between text-left text-lg font-bold"><span>{question}</span><span className="text-2xl">{openFaq === index ? '−' : '+'}</span></button>{openFaq === index && <p className="max-w-2xl pt-4 text-sm leading-relaxed text-white/75">{answer}</p>}</div>)}</div></div></section>
+    </main>
+    <footer className="bg-[#17251f] px-5 py-8 text-xs text-white/55 sm:px-10"><div className="mx-auto flex max-w-[1180px] justify-between gap-4"><span>© 2026 National Child Health Tracking</span><span className="hidden sm:inline">Connected records. Healthier futures.</span></div></footer>
+  </div>;
 };
