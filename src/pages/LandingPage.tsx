@@ -3,8 +3,6 @@ import { useApp } from '../context/AppContext';
 import {
   ArrowUpRight,
   ArrowRight,
-  Play,
-  Pause,
   Baby,
   BarChart3,
   CalendarDays,
@@ -24,20 +22,12 @@ export const LandingPage: React.FC = () => {
   const { navigateTo } = useApp();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openFaq, setOpenFaq] = React.useState<number | null>(0);
-  const [activeMedia, setActiveMedia] = React.useState(0);
-  const [mediaPlaying, setMediaPlaying] = React.useState(true);
-
-  const heroMedia = [
-    { src: 'https://images.ctfassets.net/6m9bd13t776q/3yMjCQsBOY8A6bx7gkIeVL/67a02672070d9b39634421d7e6bf5957/18_month_old_check_up-hero-shutterstock_1898938672.webp?w=1122', alt: 'A clinician checks a young child during a routine appointment', label: 'Routine care' },
-    { src: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Homepage-1-1-scaled-e1774610476245.jpg', alt: 'Healthcare team collaborating around a young patient', label: 'Connected teams' },
-    { src: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Impact-and-Solutions-Featured-Image-scaled-1-1024x683.jpg', alt: 'Healthcare professional supporting a child and family', label: 'Better outcomes' },
+  const [activeVideo, setActiveVideo] = React.useState(0);
+  const heroVideos = [
+    { src: '/videos/hero-health-1.mp4', label: 'Routine care' },
+    { src: '/videos/hero-health-2.mp4', label: 'Connected teams' },
+    { src: '/videos/hero-health-3.mp4', label: 'Better outcomes' },
   ];
-
-  React.useEffect(() => {
-    if (!mediaPlaying) return;
-    const timer = window.setInterval(() => setActiveMedia((current) => (current + 1) % heroMedia.length), 4200);
-    return () => window.clearInterval(timer);
-  }, [mediaPlaying, heroMedia.length]);
 
   const navItems = [
     ['Who we serve', '#who-we-serve'],
@@ -111,14 +101,15 @@ export const LandingPage: React.FC = () => {
               <h1 className="max-w-4xl text-[clamp(3.5rem,9vw,8.5rem)] font-light leading-[.84] tracking-[-.075em] text-[#123b36]">Every child.<br /><em className="font-serif not-italic">A healthier future.</em></h1>
             </div>
             <div className="max-w-md pb-1 lg:pb-3">
-              <div className="group relative mb-8 overflow-hidden rounded-[2rem] border border-[#123b36]/20 bg-[#123b36] shadow-[0_18px_50px_rgba(18,59,54,.18)]" onMouseEnter={() => setMediaPlaying(false)} onMouseLeave={() => setMediaPlaying(true)}>
+              <div className="group relative mb-8 overflow-hidden rounded-[2rem] border border-[#123b36]/20 bg-[#123b36] shadow-[0_18px_50px_rgba(18,59,54,.18)]">
                 <div className="relative aspect-[1.62] overflow-hidden">
-                  {heroMedia.map((media, index) => <img key={media.src} src={media.src} alt={media.alt} className={`absolute inset-0 h-full w-full object-cover transition-all duration-1000 ${index === activeMedia ? 'scale-100 opacity-100' : 'scale-105 opacity-0'}`} />)}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#123b36]/60 via-transparent to-[#123b36]/10" />
-                  <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-[#f6faf8]/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-[#123b36] backdrop-blur-sm"><span className="size-1.5 animate-pulse rounded-full bg-[#8cc63e]" /> {heroMedia[activeMedia].label}</div>
-                  <button type="button" onClick={() => setMediaPlaying((playing) => !playing)} className="absolute bottom-5 right-5 flex size-10 items-center justify-center rounded-full bg-[#f6faf8]/90 text-[#123b36] transition hover:bg-[#8cc63e]" aria-label={mediaPlaying ? 'Pause media rotation' : 'Play media rotation'}>{mediaPlaying ? <Pause className="size-4" /> : <Play className="ml-0.5 size-4" />}</button>
+                  <video className="absolute inset-0 h-full w-full object-cover" autoPlay muted playsInline onEnded={() => setActiveVideo((current) => (current + 1) % heroVideos.length)} aria-label="Scenes from connected child healthcare">
+                    <source src={heroVideos[activeVideo].src} type="video/mp4" />
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#123b36]/70 via-[#123b36]/10 to-transparent" />
+                  <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-[#f6faf8]/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-[#123b36] backdrop-blur-sm"><span className="size-1.5 animate-pulse rounded-full bg-[#8cc63e]" /> In motion</div>
                 </div>
-                <div className="flex items-center gap-2 bg-[#123b36] px-5 py-3">{heroMedia.map((media, index) => <button type="button" key={media.label} onClick={() => setActiveMedia(index)} className={`h-1.5 flex-1 rounded-full transition-all ${index === activeMedia ? 'bg-[#8cc63e]' : 'bg-[#f6faf8]/30'}`} aria-label={`Show ${media.label}`} />)}</div>
+                <div className="flex items-center gap-2 bg-[#123b36] px-5 py-3"><span className="text-[10px] font-bold uppercase tracking-[.14em] text-[#f6faf8]/65">Continuous care</span><span className="ml-auto flex gap-1.5" aria-hidden="true">{heroVideos.map((video) => <span key={video.src} className="size-1.5 rounded-full bg-[#8cc63e]/80" />)}</span></div>
               </div>
               <p className="text-lg leading-relaxed text-[#123b36]/80 sm:text-xl">The right record, at the right moment, with the right people. A connected platform for childhood health from birth to 18.</p>
               <button onClick={() => navigateTo('/demo-login')} className="mt-8 inline-flex items-center gap-3 border-b-2 border-[#123b36] pb-2 text-sm font-bold text-[#123b36] transition hover:gap-5">See what’s possible <ArrowRight className="size-4" /></button>
