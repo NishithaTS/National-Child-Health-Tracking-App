@@ -9,7 +9,7 @@ export const LandingPage: React.FC = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openFaq, setOpenFaq] = React.useState(0);
   const [heroVideoIndex, setHeroVideoIndex] = React.useState(0);
-  const heroVideos = ['/videos/hero-health-1.mp4', '/videos/hero-health-2.mp4', '/videos/hero-health-3.mp4'];
+  const heroVideos = ['/videos/hero-health-1.mp4', '/videos/hero-health-2.mp4', '/videos/hero-health-3.mp4', '/videos/hero-health-4.mp4'];
 
   const services = [
     { eyebrow: 'Families', title: 'A clear view of every stage of childhood', description: 'Keep growth, immunisations, appointments, and trusted care teams connected from birth to 18.', icon: Baby, image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Health-Featured-Image-1024x683.jpg' },
