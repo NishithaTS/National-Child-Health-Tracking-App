@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
+import { HealthChatbot } from '../components/HealthChatbot';
 import { ArrowRight, ArrowUpRight, BarChart3, Baby, CircleCheck, FileHeart, HeartHandshake, Menu, ShieldCheck, Sparkles, Syringe, X } from 'lucide-react';
 
 const navItems = [['Who we serve', '#who-we-serve'], ['What we do', '#what-we-do'], ['Our story', '#who-we-are'], ['Demo', '#your-next-role']];
@@ -57,5 +58,6 @@ export const LandingPage: React.FC = () => {
       <section id="faq" className="bg-[#43852e] px-5 py-20 text-[#f4f5f0] sm:px-10 sm:py-24"><div className="mx-auto max-w-[900px]"><p className="text-xs font-bold uppercase tracking-[.18em] text-[#b9f398]">Useful answers</p><h2 className="mt-4 text-4xl font-black uppercase leading-[.9] tracking-[-.06em] sm:text-6xl">Questions, answered.</h2><div className="mt-10">{faqs.map(([question, answer], index) => <div key={question} className="border-t border-white/25 py-5"><button onClick={() => setOpenFaq(openFaq === index ? -1 : index)} className="flex w-full items-center justify-between text-left text-lg font-bold"><span>{question}</span><span className="text-2xl">{openFaq === index ? '−' : '+'}</span></button>{openFaq === index && <p className="max-w-2xl pt-4 text-sm leading-relaxed text-white/75">{answer}</p>}</div>)}</div></div></section>
     </main>
     <footer className="bg-[#17251f] px-5 py-8 text-xs text-white/55 sm:px-10"><div className="mx-auto flex max-w-[1180px] justify-between gap-4"><span>© 2026 National Child Health Tracking</span><span className="hidden sm:inline">Connected records. Healthier futures.</span></div></footer>
+    <HealthChatbot />
   </div>;
 };
