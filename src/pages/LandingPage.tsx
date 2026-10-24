@@ -9,7 +9,27 @@ export const LandingPage: React.FC = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openFaq, setOpenFaq] = React.useState(0);
   const [heroVideoIndex, setHeroVideoIndex] = React.useState(0);
+  const [previousHeroVideoIndex, setPreviousHeroVideoIndex] = React.useState<number | null>(null);
+  const heroVideoRefs = React.useRef<Array<HTMLVideoElement | null>>([]);
   const heroVideos = ['/videos/hero-health-1.mp4', '/videos/hero-health-2.mp4', '/videos/hero-health-3.mp4', '/videos/hero-health-4.mp4'];
+
+  React.useEffect(() => {
+    heroVideoRefs.current.forEach((video, index) => {
+      if (!video) return;
+      if (index === heroVideoIndex) {
+        void video.play();
+      } else {
+        video.pause();
+      }
+    });
+  }, [heroVideoIndex]);
+
+  const advanceHeroVideo = () => {
+    const nextIndex = (heroVideoIndex + 1) % heroVideos.length;
+    setPreviousHeroVideoIndex(heroVideoIndex);
+    setHeroVideoIndex(nextIndex);
+    window.setTimeout(() => setPreviousHeroVideoIndex(null), 1400);
+  };
 
   const services = [
     { eyebrow: 'Families', title: 'A clear view of every stage of childhood', description: 'Keep growth, immunisations, appointments, and trusted care teams connected from birth to 18.', icon: Baby, image: 'https://hunter-healthcare.com/wp-content/uploads/2026/06/Health-Featured-Image-1024x683.jpg' },
@@ -20,7 +40,7 @@ export const LandingPage: React.FC = () => {
 
   return <div className="min-h-screen bg-[#f4f5f0] font-sans text-[#17251f]">
     <section className="relative flex min-h-[min(760px,100vh)] flex-col overflow-hidden bg-[#15271f] text-[#f4f5f0]">
-      <video key={heroVideos[heroVideoIndex]} className="absolute inset-0 h-full w-full object-cover opacity-60" style={{ animation: 'heroVideoFade 1.2s ease both' }} autoPlay muted playsInline onEnded={() => setHeroVideoIndex((index) => (index + 1) % heroVideos.length)} aria-label="Children and care teams in motion"><source src={heroVideos[heroVideoIndex]} type="video/mp4" /></video>
+      {heroVideos.map((src, index) => <video key={src} ref={(video) => { heroVideoRefs.current[index] = video; }} className="absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ease-in-out" style={{ opacity: index === heroVideoIndex || index === previousHeroVideoIndex ? 0.6 : 0 }} autoPlay={index === heroVideoIndex} muted playsInline preload={index === heroVideoIndex || index === (heroVideoIndex + 1) % heroVideos.length ? 'auto' : 'metadata'} onEnded={index === heroVideoIndex ? advanceHeroVideo : undefined} aria-label="Children and care teams in motion"><source src={src} type="video/mp4" /></video>)}
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,17,.62),rgba(10,22,17,.2)_45%,rgba(10,22,17,.84))]" />
       <header className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-10"><a href="#top" className="rounded-xl bg-[#f4f5f0] px-4 py-3 text-[13px] font-black tracking-[-.04em] text-[#17251f]">NCHT<span className="text-[#6ebd45]">+</span></a><nav className="hidden items-center gap-7 text-xs font-semibold lg:flex">{navItems.map(([label, href]) => <a key={label} href={href} className="transition hover:text-[#9ce477]">{label}</a>)}</nav><div className="flex items-center gap-2"><button className="rounded-xl bg-[#f4f5f0] p-3 text-[#17251f] lg:hidden" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Close menu' : 'Open menu'}>{mobileOpen ? <X /> : <Menu />}</button><button onClick={() => navigateTo('/demo-login')} className="hidden rounded-xl bg-[#f4f5f0] px-5 py-3 text-xs font-bold text-[#17251f] transition hover:bg-[#9ce477] lg:block">Explore demo <ArrowUpRight className="ml-1 inline size-4" /></button></div></header>
       {mobileOpen && <nav className="relative z-20 mx-5 flex flex-col gap-4 rounded-2xl bg-[#f4f5f0] p-5 text-sm font-semibold text-[#17251f] lg:hidden">{navItems.map(([label, href]) => <a key={label} href={href} onClick={() => setMobileOpen(false)}>{label}</a>)}<button onClick={() => navigateTo('/demo-login')} className="text-left font-bold text-[#43852e]">Open demo <ArrowRight className="inline size-4" /></button></nav>}
