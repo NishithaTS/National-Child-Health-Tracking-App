@@ -138,8 +138,15 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+const EMPTY_DATA_VERSION = 'empty-data-v1';
+const DATA_STORAGE_KEYS = ['ncht_children', 'ncht_vaccinations', 'ncht_growth', 'ncht_milestones', 'ncht_appointments', 'ncht_referrals', 'ncht_visits', 'ncht_allergies', 'ncht_medications', 'ncht_notifications', 'ncht_ai_insights', 'ncht_audit_logs', 'ncht_sync_queue'];
+
 function loadFromStorage<T>(key: string, defaultValue: T): T {
   try {
+    if (key === 'ncht_children' && localStorage.getItem('ncht_empty_data_version') !== EMPTY_DATA_VERSION) {
+      DATA_STORAGE_KEYS.forEach((storageKey) => localStorage.removeItem(storageKey));
+      localStorage.setItem('ncht_empty_data_version', EMPTY_DATA_VERSION);
+    }
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
   } catch (e) {
@@ -197,7 +204,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children:
 
   // Active Child
   const [selectedChildId, setSelectedChildId] = useState<string>(() => {
-    return loadFromStorage<string>('ncht_selected_child', 'child-01');
+    return loadFromStorage<string>('ncht_selected_child', '');
   });
 
   useEffect(() => {
@@ -206,62 +213,62 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children:
 
   // Core Data States
   const [children, setChildren] = useState<Child[]>(() =>
-    loadFromStorage('ncht_children', INITIAL_CHILDREN)
+    loadFromStorage<Child[]>('ncht_children', [])
   );
   useEffect(() => saveToStorage('ncht_children', children), [children]);
 
   const [vaccinations, setVaccinations] = useState<VaccinationRecord[]>(() =>
-    loadFromStorage('ncht_vaccinations', INITIAL_VACCINATIONS)
+    loadFromStorage<VaccinationRecord[]>('ncht_vaccinations', [])
   );
   useEffect(() => saveToStorage('ncht_vaccinations', vaccinations), [vaccinations]);
 
   const [growthMeasurements, setGrowthMeasurements] = useState<GrowthMeasurement[]>(() =>
-    loadFromStorage('ncht_growth', INITIAL_GROWTH_MEASUREMENTS)
+    loadFromStorage<GrowthMeasurement[]>('ncht_growth', [])
   );
   useEffect(() => saveToStorage('ncht_growth', growthMeasurements), [growthMeasurements]);
 
   const [milestones, setMilestones] = useState<MilestoneRecord[]>(() =>
-    loadFromStorage('ncht_milestones', INITIAL_MILESTONES)
+    loadFromStorage<MilestoneRecord[]>('ncht_milestones', [])
   );
   useEffect(() => saveToStorage('ncht_milestones', milestones), [milestones]);
 
   const [appointments, setAppointments] = useState<Appointment[]>(() =>
-    loadFromStorage('ncht_appointments', INITIAL_APPOINTMENTS)
+    loadFromStorage<Appointment[]>('ncht_appointments', [])
   );
   useEffect(() => saveToStorage('ncht_appointments', appointments), [appointments]);
 
   const [referrals, setReferrals] = useState<Referral[]>(() =>
-    loadFromStorage('ncht_referrals', INITIAL_REFERRALS)
+    loadFromStorage<Referral[]>('ncht_referrals', [])
   );
   useEffect(() => saveToStorage('ncht_referrals', referrals), [referrals]);
 
   const [visits, setVisits] = useState<ClinicalVisit[]>(() =>
-    loadFromStorage('ncht_visits', INITIAL_VISITS)
+    loadFromStorage<ClinicalVisit[]>('ncht_visits', [])
   );
   useEffect(() => saveToStorage('ncht_visits', visits), [visits]);
 
   const [allergies, setAllergies] = useState<Allergy[]>(() =>
-    loadFromStorage('ncht_allergies', INITIAL_ALLERGIES)
+    loadFromStorage<Allergy[]>('ncht_allergies', [])
   );
   useEffect(() => saveToStorage('ncht_allergies', allergies), [allergies]);
 
   const [medications, setMedications] = useState<Medication[]>(() =>
-    loadFromStorage('ncht_medications', INITIAL_MEDICATIONS)
+    loadFromStorage<Medication[]>('ncht_medications', [])
   );
   useEffect(() => saveToStorage('ncht_medications', medications), [medications]);
 
   const [notifications, setNotifications] = useState<NotificationItem[]>(() =>
-    loadFromStorage('ncht_notifications', INITIAL_NOTIFICATIONS)
+    loadFromStorage<NotificationItem[]>('ncht_notifications', [])
   );
   useEffect(() => saveToStorage('ncht_notifications', notifications), [notifications]);
 
   const [aiInsights, setAiInsights] = useState<ResponsibleAiInsight[]>(() =>
-    loadFromStorage('ncht_ai_insights', INITIAL_AI_INSIGHTS)
+    loadFromStorage<ResponsibleAiInsight[]>('ncht_ai_insights', [])
   );
   useEffect(() => saveToStorage('ncht_ai_insights', aiInsights), [aiInsights]);
 
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>(() =>
-    loadFromStorage('ncht_audit_logs', INITIAL_AUDIT_LOGS)
+    loadFromStorage<AuditLog[]>('ncht_audit_logs', [])
   );
   useEffect(() => saveToStorage('ncht_audit_logs', auditLogs), [auditLogs]);
 
@@ -272,16 +279,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children:
     loadFromStorage('ncht_is_offline', false)
   );
   const [syncQueue, setSyncQueue] = useState<SyncQueueItem[]>(() =>
-    loadFromStorage('ncht_sync_queue', [
-      {
-        id: 'sync-01',
-        timestamp: '2026-10-20 07:15',
-        actionType: 'Record Visit',
-        childName: 'Aarav Sharma',
-        payload: { summary: 'Routine field weight verification (92.4 cm, 13.8 kg)' },
-        status: 'pending',
-      },
-    ])
+    loadFromStorage<SyncQueueItem[]>('ncht_sync_queue', [])
   );
   useEffect(() => saveToStorage('ncht_is_offline', isOffline), [isOffline]);
   useEffect(() => saveToStorage('ncht_sync_queue', syncQueue), [syncQueue]);
@@ -661,23 +659,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children:
 
   const resetAllDemoData = () => {
     localStorage.clear();
-    setChildren(INITIAL_CHILDREN);
-    setVaccinations(INITIAL_VACCINATIONS);
-    setGrowthMeasurements(INITIAL_GROWTH_MEASUREMENTS);
-    setMilestones(INITIAL_MILESTONES);
-    setAppointments(INITIAL_APPOINTMENTS);
-    setReferrals(INITIAL_REFERRALS);
-    setVisits(INITIAL_VISITS);
-    setAllergies(INITIAL_ALLERGIES);
-    setMedications(INITIAL_MEDICATIONS);
-    setNotifications(INITIAL_NOTIFICATIONS);
-    setAiInsights(INITIAL_AI_INSIGHTS);
-    setAuditLogs(INITIAL_AUDIT_LOGS);
+    setChildren([]);
+    setVaccinations([]);
+    setGrowthMeasurements([]);
+    setMilestones([]);
+    setAppointments([]);
+    setReferrals([]);
+    setVisits([]);
+    setAllergies([]);
+    setMedications([]);
+    setNotifications([]);
+    setAiInsights([]);
+    setAuditLogs([]);
     setRoleState('parent');
-    setSelectedChildId('child-01');
+    setSelectedChildId('');
     setIsOffline(false);
     setSyncQueue([]);
-    addToast('Demo Data Reset', 'Restored default synthetic dataset.', 'info');
+    addToast('Data cleared', 'All local health records have been removed.', 'info');
   };
 
   const selectedChild = children.find((c) => c.id === selectedChildId) || children[0];
