@@ -167,7 +167,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children:
   // Navigation Route from hash
   const normalizeHashRoute = (hash: string) => {
     const route = hash.replace(/^#\/?/, '');
-    return route ? `/${route}` : '/';
+    if (!route) return '/';
+    try {
+      return `/${decodeURIComponent(route)}`;
+    } catch {
+      return `/${route}`;
+    }
   };
 
   const [currentRoute, setCurrentRoute] = useState<string>(() =>
@@ -184,7 +189,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children:
 
   const navigateTo = (route: string) => {
     const normalizedRoute = route.startsWith('/') ? route : `/${route}`;
-    window.location.hash = normalizedRoute.slice(1);
+    window.location.hash = encodeURIComponent(normalizedRoute.slice(1));
     setCurrentRoute(normalizedRoute);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
