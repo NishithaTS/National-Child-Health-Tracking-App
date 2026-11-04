@@ -165,23 +165,27 @@ function saveToStorage<T>(key: string, value: T): void {
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children: childComponents }) => {
   // Navigation Route from hash
-  const [currentRoute, setCurrentRoute] = useState<string>(() => {
-    const hash = window.location.hash.replace(/^#/, '');
-    return hash || '/';
-  });
+  const normalizeHashRoute = (hash: string) => {
+    const route = hash.replace(/^#\/?/, '');
+    return route ? `/${route}` : '/';
+  };
+
+  const [currentRoute, setCurrentRoute] = useState<string>(() =>
+    normalizeHashRoute(window.location.hash)
+  );
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace(/^#/, '');
-      setCurrentRoute(hash || '/');
+      setCurrentRoute(normalizeHashRoute(window.location.hash));
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const navigateTo = (route: string) => {
-    window.location.hash = route;
-    setCurrentRoute(route);
+    const normalizedRoute = route.startsWith('/') ? route : `/${route}`;
+    window.location.hash = normalizedRoute.slice(1);
+    setCurrentRoute(normalizedRoute);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
