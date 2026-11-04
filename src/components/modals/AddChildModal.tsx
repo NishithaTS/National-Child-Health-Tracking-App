@@ -82,9 +82,11 @@ export const AddChildModal: React.FC<AddChildModalProps> = ({ isOpen, onClose })
 
     // Synthetic Avatar based on gender
     const photoUrl =
-      gender === 'Female'
-        ? 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80'
-        : 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=300&q=80';
+      name.trim().toLowerCase() === 'nivara satyabhama'
+        ? 'https://i.pinimg.com/236x/a1/8b/fe/a18bfe22ef2776bf14114f209f63265e.jpg'
+        : gender === 'Female'
+          ? 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80'
+          : 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=300&q=80';
 
     addChild({
       uhid,
